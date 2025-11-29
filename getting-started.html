@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入门指南 - expo-liteDBStore</title>
+    <meta name="description" content="expo-liteDBStore 入门指南，为 React Native + Expo 项目提供轻量级本地存储解决方案的快速上手教程。">
+    <meta name="keywords" content="expo-liteDBStore, 入门指南, 安装, 使用教程, React Native, Expo, 本地存储">
+    <meta name="author" content="expo-liteDBStore Team">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="入门指南 - expo-liteDBStore">
+    <meta property="og:description" content="expo-liteDBStore 入门指南，为 React Native + Expo 项目提供轻量级本地存储解决方案的快速上手教程。">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="入门指南 - expo-liteDBStore">
+    <meta name="twitter:description" content="expo-liteDBStore 入门指南，为 React Native + Expo 项目提供轻量级本地存储解决方案的快速上手教程。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body class="dark:bg-background-dark bg-background-light dark:text-text-primary-dark text-text-primary-light transition-all duration-300">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 dark:bg-background-dark/80 bg-background-light shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="./" class="flex-shrink-0 flex items-center transition-transform hover:scale-105">
+                        <span class="text-xl font-bold gradient-text" data-i18n="title">expo-liteDBStore</span>
+                    </a>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-6">
+                            <a href="./" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="home">首页</a>
+                            <a href="./getting-started.html" class="px-3 py-2 rounded-md text-sm font-medium text-primary-color dark:text-primary-color nav-link active" data-i18n="gettingStarted">入门指南</a>
+                            <a href="./api.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="reference">API 参考</a>
+                            <a href="./architecture.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="architecture">架构设计</a>
+                            <a href="./examples.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="examples">示例代码</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <!-- 搜索框 -->
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full text-sm dark:bg-background-dark-alt bg-background-light-alt focus:outline-none focus:ring-2 focus:ring-primary-color search-input" data-i18n="search">
+                        <svg class="absolute left-3 top-2.5 h-4 w-4 text-text-muted-light dark:text-text-muted-dark icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <!-- 语言切换 -->
+                    <button type="button" onclick="setLanguage(currentLang === 'zh' ? 'en' : 'zh')" class="p-2 rounded-full hover:bg-primary-light dark:hover:bg-primary-dark/20 icon-btn" aria-label="切换语言">
+                        <svg class="h-5 w-5 icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <!-- 主题切换 -->
+                    <button type="button" onclick="toggleTheme()" class="p-2 rounded-full hover:bg-primary-light dark:hover:bg-primary-dark/20 icon-btn" aria-label="切换主题">
+                        <svg class="h-5 w-5 icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- 页面标题 -->
+        <div class="text-center mb-20">
+            <div class="inline-block mb-6 px-4 py-2 bg-primary-light dark:bg-primary-dark/20 rounded-full text-sm font-medium text-primary-dark dark:text-primary-color tag">
+                <span data-i18n="gettingStarted">入门指南</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text" data-i18n="gettingStartedTitle">开始使用 expo-liteDBStore</h1>
+            <p class="text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-3xl mx-auto" data-i18n="gettingStartedSubtitle">快速上手轻量级本地存储解决方案，为 React Native + Expo 项目设计。</p>
+        </div>
+
+        <!-- 前提条件 -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3 justify-center">
+                <svg class="h-8 w-8 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <span data-i18n="prerequisites">前提条件</span>
+            </h2>
+            <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-lg p-8 card-hover">
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-primary-light dark:bg-primary-dark/20 flex items-center justify-center text-primary-dark dark:text-primary-color font-bold text-sm">1</div>
+                        <span class="text-text-primary-light dark:text-text-primary-dark text-lg" data-i18n="prereq1">React Native 项目</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-primary-light dark:bg-primary-dark/20 flex items-center justify-center text-primary-dark dark:text-primary-color font-bold text-sm">2</div>
+                        <span class="text-text-primary-light dark:text-text-primary-dark text-lg" data-i18n="prereq2">Expo SDK 49+</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-primary-light dark:bg-primary-dark/20 flex items-center justify-center text-primary-dark dark:text-primary-color font-bold text-sm">3</div>
+                        <span class="text-text-primary-light dark:text-text-primary-dark text-lg" data-i18n="prereq3">Node.js 16+</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 安装指南 -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3 justify-center">
+                <svg class="h-8 w-8 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v12a1 1 0 102 0V5a1 1 0 00-2 0zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+                </svg>
+                <span data-i18n="installationGuide">安装指南</span>
+            </h2>
+            <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-lg p-10 card-hover">
+                <h3 class="text-xl font-semibold mb-8 text-center" data-i18n="installationSteps">安装步骤</h3>
+
+                <div class="space-y-12">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-5 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-primary-light dark:bg-primary-dark/30 flex items-center justify-center text-primary-color dark:text-primary-color font-bold">1</span>
+                            <span data-i18n="step1">安装依赖</span>
+                        </h4>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark"><code>npm install expo-lite-db-store</code></pre>
+                        </div>
+                        <p class="mt-4 text-text-secondary-light dark:text-text-secondary-dark">或者使用 yarn 或 pnpm:</p>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 mt-3 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark"><code>yarn add expo-lite-db-store
+# 或者
+pnpm add expo-lite-db-store</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-5 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-primary-light dark:bg-primary-dark/30 flex items-center justify-center text-primary-color dark:text-primary-color font-bold">2</span>
+                            <span data-i18n="step2">配置项目</span>
+                        </h4>
+                        <p class="mb-5 text-text-secondary-light dark:text-text-secondary-dark" data-i18n="configurationFile">你可以创建一个配置文件来自定义 expo-liteDBStore 的行为：</p>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark overflow-x-auto"><code>// src/liteStore.config.js
+module.exports = {
+  // 存储路径
+  storagePath: 'expo-liteDBStore',
+  // 单文件最大大小（字节）
+  maxFileSize: 5 * 1024 * 1024, // 5MB
+  // 默认加密密钥（可选）
+  encryptionKey: 'your-secret-key',
+  // 缓存大小
+  cacheSize: 1000,
+  // 日志级别
+  logLevel: 'info'
+};</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-5 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-primary-light dark:bg-primary-dark/30 flex items-center justify-center text-primary-color dark:text-primary-color font-bold">3</span>
+                            <span data-i18n="step3">开始使用</span>
+                        </h4>
+                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-lg">现在你可以在你的项目中使用 expo-liteDBStore 了！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 基本使用 -->
+        <section class="mb-20">
+            <h2 id="usage" class="text-3xl font-bold mb-10 flex items-center gap-3 justify-center">
+                <svg class="h-8 w-8 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                </svg>
+                <span data-i18n="basicUsage">基本使用</span>
+            </h2>
+            <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-lg p-10 card-hover">
+                <div class="space-y-12">
+                    <!-- 创建表 -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                            <svg class="h-6 w-6 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span data-i18n="createTable">创建表</span>
+                        </h3>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark overflow-x-auto"><code>import { createTable } from 'expo-lite-db-store';
+
+// 创建一个名为 users 的表
+await createTable('users');
+
+// 或者使用选项创建表
+await createTable('users', {
+  // 是否启用加密
+  encrypted: true,
+  // 是否自动创建索引
+  autoIndex: true,
+  // 索引字段
+  indexes: ['id', 'email']
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 插入数据 -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                            <svg class="h-6 w-6 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a3 3 0 003-3z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span data-i18n="insertData">插入数据</span>
+                        </h3>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark overflow-x-auto"><code>import { insert } from 'expo-lite-db-store';
+
+// 插入单条数据
+await insert('users', { id: 1, name: '张三', email: 'zhangsan@example.com', age: 25 });
+
+// 插入多条数据
+await insert('users', [
+  { id: 2, name: '李四', email: 'lisi@example.com', age: 30 },
+  { id: 3, name: '王五', email: 'wangwu@example.com', age: 35 }
+]);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 查询数据 -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                            <svg class="h-6 w-6 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span data-i18n="queryData">查询数据</span>
+                        </h3>
+                        <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-text-primary-light dark:text-text-primary-dark overflow-x-auto"><code>import { findOne, findMany } from 'expo-lite-db-store';
+
+// 查询单条数据
+const user = await findOne('users', { id: 1 });
+console.log(user); // { id: 1, name: '张三', email: 'zhangsan@example.com', age: 25 }
+
+// 查询多条数据
+const users = await findMany('users', { age: { $gt: 25 } });
+console.log(users); // 所有年龄大于 25 的用户
+
+// 使用选项查询
+const paginatedUsers = await findMany('users',
+  { active: true },
+  {
+    skip: 10,  // 跳过前 10 条
+    limit: 20, // 返回 20 条
+    sort: { createdAt: -1 } // 按创建时间降序排序
+  }
+);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 更新数据 -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                            <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a3 3 0 00-3 3v10a1 1 0 102 0V7a1 1 0 011-1h10a1 1 0 100-2H4zm2 5a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm3 2a1 1 0 100 2h.01a1 1 0 100-2H10z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span data-i18n="updateData">更新数据</span>
+                        </h3>
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-gray-800 dark:text-gray-200 overflow-x-auto"><code>import { update } from 'expo-lite-db-store';
+
+// 更新单条数据
+const updatedCount = await update('users', { age: 26 }, { id: 1 });
+console.log(updatedCount); // 1
+
+// 更新多条数据
+const updatedCount = await update('users', { active: true }, { age: { $gt: 30 } });
+console.log(updatedCount); // 更新的记录数</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- 删除数据 -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                            <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"></path>
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 1h6v8a1 1 0 11-2 0V6H7a1 1 0 010-2z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span data-i18n="deleteData">删除数据</span>
+                        </h3>
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <pre class="text-sm font-mono text-gray-800 dark:text-gray-200 overflow-x-auto"><code>import { remove } from 'expo-lite-db-store';
+
+// 删除单条数据
+const deletedCount = await remove('users', { id: 1 });
+console.log(deletedCount); // 1
+
+// 删除多条数据
+const deletedCount = await remove('users', { age: { $lt: 18 } });
+console.log(deletedCount); // 删除的记录数</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 下一步 -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3 justify-center">
+                <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span data-i18n="nextSteps">下一步</span>
+            </h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="./api.html" class="block p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-300 next-step-card">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mb-5">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-600 dark:text-blue-400" data-i18n="nextStep1">查看 API 参考</h3>
+                        <p class="text-gray-600 dark:text-gray-300">了解完整的 API 文档和用法，深入掌握 expo-liteDBStore 的功能。</p>
+                    </a>
+                    <a href="./examples.html" class="block p-8 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-all duration-300 next-step-card">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/40 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400 mb-5">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8H7v2h8v-2zm0-4H7v2h8V9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-green-600 dark:text-green-400" data-i18n="nextStep2">查看示例代码</h3>
+                        <p class="text-gray-600 dark:text-gray-300">查看更多示例代码和使用场景，快速掌握最佳实践。</p>
+                    </a>
+                    <a href="./architecture.html" class="block p-8 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all duration-300 next-step-card">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/40 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 mb-5">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v12a1 1 0 102 0V5a1 1 0 00-2 0zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-purple-600 dark:text-purple-400" data-i18n="nextStep3">了解架构设计</h3>
+                        <p class="text-gray-600 dark:text-gray-300">了解 expo-liteDBStore 的架构设计，深入理解其工作原理。</p>
+                    </a>
+                    <a href="https://github.com/QinIndexCode/expo-liteDataStore" target="_blank" class="block p-8 bg-orange-50 dark:bg-orange-900/20 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-all duration-300 next-step-card">
+                        <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/40 rounded-lg flex items-center justify-center text-orange-600 dark:text-orange-400 mb-5">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-orange-600 dark:text-orange-400" data-i18n="nextStep4">加入社区讨论</h3>
+                        <p class="text-gray-600 dark:text-gray-300">在 GitHub 上参与讨论和贡献，与其他开发者一起改进 expo-liteDBStore。</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-background-light-alt dark:bg-background-dark-alt py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div>
+                    <h3 class="text-xl font-bold mb-5 gradient-text" data-i18n="title">expo-liteDBStore</h3>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark mb-6">轻量级本地存储解决方案，为 React Native + Expo 项目设计，无需任何 native 依赖。</p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/QinIndexCode/expo-liteDataStore" target="_blank" class="w-10 h-10 bg-background-light dark:bg-background-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary-color dark:hover:text-primary-color transition-all" aria-label="GitHub Repository">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.npmjs.com/package/expo-lite-db-store" target="_blank" class="w-10 h-10 bg-background-light dark:bg-background-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary-color dark:hover:text-primary-color transition-all" aria-label="NPM Package">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M1.75 0l11.75 2.938L23.75 0v24l-11.75-2.938L1.75 24V0zm10.25 21.219L4.5 22.5V1.5l7.5 1.281v18.438zm1-18.438L20.5 1.5v21l-8.5-2.125V2.781z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="gettingStarted">入门指南</h3>
+                    <ul class="space-y-4">
+                        <li><a href="./getting-started.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>安装</span>
+                        </a></li>
+                        <li><a href="./getting-started.html#usage" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>基本使用</span>
+                        </a></li>
+                        <li><a href="./examples.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>示例代码</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="reference">API 参考</h3>
+                    <ul class="space-y-4">
+                        <li><a href="./api.html#table-operations" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>表操作</span>
+                        </a></li>
+                        <li><a href="./api.html#data-operations" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>数据操作</span>
+                        </a></li>
+                        <li><a href="./api.html#transactions" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>事务管理</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="community">社区</h3>
+                    <ul class="space-y-4">
+                        <li><a href="https://github.com/QinIndexCode/expo-liteDataStore" target="_blank" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>GitHub</span>
+                        </a></li>
+                        <li><a href="https://www.npmjs.com/package/expo-lite-db-store" target="_blank" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>npm</span>
+                        </a></li>
+                        <li><a href="./changelog.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2" data-i18n="changelog">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>更新日志</span>
+                        </a></li>
+                        <li><a href="./license.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2" data-i18n="license">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>许可证</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-border-light dark:border-border-dark text-center text-text-secondary-light dark:text-text-secondary-dark">
+                <p>© 2025 expo-liteDBStore. <a href="./license.html" class="hover:text-primary-color dark:hover:text-primary-color font-medium" data-i18n="license">MIT License</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

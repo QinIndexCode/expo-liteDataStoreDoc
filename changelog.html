@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日志 - expo-liteDBStore</title>
+    <meta name="description" content="expo-liteDBStore 更新日志，记录版本变更、新特性、修复和改进，帮助开发者了解轻量级本地存储解决方案的演进历程。">
+    <meta name="keywords" content="expo-liteDBStore, 更新日志, 版本变更, 新特性, 修复, 改进, 版本历史">
+    <meta name="author" content="expo-liteDBStore Team">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="更新日志 - expo-liteDBStore">
+    <meta property="og:description" content="expo-liteDBStore 更新日志，记录版本变更、新特性、修复和改进。">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="更新日志 - expo-liteDBStore">
+    <meta name="twitter:description" content="expo-liteDBStore 更新日志，记录版本变更、新特性、修复和改进。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body class="dark:bg-background-dark bg-background-light dark:text-text-primary-dark text-text-primary-light transition-all duration-300">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 dark:bg-background-dark/80 bg-background-light shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="./" class="flex-shrink-0 flex items-center transition-transform hover:scale-105">
+                        <span class="text-xl font-bold gradient-text" data-i18n="title">expo-liteDBStore</span>
+                    </a>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-6">
+                            <a href="./" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="home">首页</a>
+                            <a href="./getting-started.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="gettingStarted">入门指南</a>
+                            <a href="./api.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="reference">API 参考</a>
+                            <a href="./architecture.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="architecture">架构设计</a>
+                            <a href="./examples.html" class="px-3 py-2 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color nav-link" data-i18n="examples">示例代码</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <!-- 搜索框 -->
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full text-sm dark:bg-background-dark-alt bg-background-light-alt focus:outline-none focus:ring-2 focus:ring-primary-color search-input" data-i18n="search">
+                        <svg class="absolute left-3 top-2.5 h-4 w-4 text-text-muted-light dark:text-text-muted-dark icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <!-- 语言切换 -->
+                    <button type="button" onclick="setLanguage(currentLang === 'zh' ? 'en' : 'zh')" class="p-2 rounded-full hover:bg-primary-light dark:hover:bg-primary-dark/20 icon-btn" aria-label="切换语言">
+                        <svg class="h-5 w-5 icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <!-- 主题切换 -->
+                    <button type="button" onclick="toggleTheme()" class="p-2 rounded-full hover:bg-primary-light dark:hover:bg-primary-dark/20 icon-btn" aria-label="切换主题">
+                        <svg class="h-5 w-5 icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- 页面标题 -->
+        <div class="text-center mb-20">
+            <div class="inline-block mb-6 px-4 py-2 bg-primary-light dark:bg-primary-dark/20 rounded-full text-sm font-medium text-primary-dark dark:text-primary-color">
+                <span data-i18n="changelog">更新日志</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 gradient-text" data-i18n="changelogTitle">更新日志</h1>
+            <p class="text-xl text-text-secondary-light dark:text-text-secondary-dark max-w-3xl mx-auto" data-i18n="changelogSubtitle">记录版本变更、新特性、修复和改进</p>
+        </div>
+
+        <!-- 更新日志列表 -->
+        <section>
+            <!-- 版本 1.0.0 -->
+            <div class="mb-12 card card-hover p-8 hover-lift fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-primary-color" data-i18n="version100">1.0.0</h2>
+                    <span class="text-text-muted-light dark:text-text-muted-dark mt-2 md:mt-0" data-i18n="version100Date">2025-11-29</span>
+                </div>
+                <p class="text-text-secondary-light dark:text-text-secondary-dark mb-6" data-i18n="version100Desc">初始版本发布</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3 text-primary-color dark:text-primary-color" data-i18n="newFeatures">新特性</h3>
+                        <ul class="list-disc list-inside space-y-2 text-text-secondary-light dark:text-text-secondary-dark">
+                            <li data-i18n="version100Features">完整的存储引擎功能，包括表操作、数据操作、事务管理、查询引擎等</li>
+                            <li>支持加密存储，使用 AES-GCM 算法</li>
+                            <li>支持分块存储，单文件最大 5MB 自动分块</li>
+                            <li>支持复杂查询，包括比较操作符、逻辑操作符等</li>
+                            <li>支持事务操作，确保数据一致性</li>
+                            <li>完整的 TypeScript 支持</li>
+                            <li>零依赖、零配置，开箱即用</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 版本 0.1.0 -->
+            <div class="mb-12 card card-hover p-8 hover-lift fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-primary-color" data-i18n="version010">0.1.0</h2>
+                    <span class="text-text-muted-light dark:text-text-muted-dark mt-2 md:mt-0" data-i18n="version010Date">2025-11-20</span>
+                </div>
+                <p class="text-text-secondary-light dark:text-text-secondary-dark mb-6" data-i18n="version010Desc">测试版本发布</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3 text-primary-color dark:text-primary-color" data-i18n="newFeatures">新特性</h3>
+                        <ul class="list-disc list-inside space-y-2 text-text-secondary-light dark:text-text-secondary-dark">
+                            <li data-i18n="version010Features">基本的存储功能，支持创建表、插入数据、查询数据等</li>
+                            <li>支持单文件存储</li>
+                            <li>支持基本的查询操作</li>
+                            <li>支持数据更新和删除</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 版本 0.0.1 -->
+            <div class="mb-12 card card-hover p-8 hover-lift fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-primary-color" data-i18n="version001">0.0.1</h2>
+                    <span class="text-text-muted-light dark:text-text-muted-dark mt-2 md:mt-0" data-i18n="version001Date">2025-11-15</span>
+                </div>
+                <p class="text-text-secondary-light dark:text-text-secondary-dark mb-6" data-i18n="version001Desc">预览版本发布</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3 text-primary-color dark:text-primary-color" data-i18n="newFeatures">新特性</h3>
+                        <ul class="list-disc list-inside space-y-2 text-text-secondary-light dark:text-text-secondary-dark">
+                            <li data-i18n="version001Features">初始版本，支持基本的存储功能</li>
+                            <li>支持创建表和插入数据</li>
+                            <li>支持简单的查询操作</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-background-light-alt dark:bg-background-dark-alt py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div>
+                    <h3 class="text-xl font-bold mb-5 gradient-text" data-i18n="title">expo-liteDBStore</h3>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark mb-6">轻量级本地存储解决方案，为 React Native + Expo 项目设计，无需任何 native 依赖。</p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/QinIndexCode/expo-liteDataStore" target="_blank" class="w-10 h-10 bg-background-light dark:bg-background-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary-color dark:hover:text-primary-color transition-all" aria-label="GitHub 仓库">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.npmjs.com/package/expo-lite-db-store" target="_blank" class="w-10 h-10 bg-background-light dark:bg-background-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary-color dark:hover:text-primary-color transition-all" aria-label="npm 包">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M1.75 0l11.75 2.938L23.75 0v24l-11.75-2.938L1.75 24V0zm10.25 21.219L4.5 22.5V1.5l7.5 1.281v18.438zm1-18.438L20.5 1.5v21l-8.5-2.125V2.781z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="gettingStarted">入门指南</h3>
+                    <ul class="space-y-4">
+                        <li><a href="./getting-started.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>安装</span>
+                        </a></li>
+                        <li><a href="./getting-started.html#usage" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>基本使用</span>
+                        </a></li>
+                        <li><a href="./examples.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>示例代码</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="reference">API 参考</h3>
+                    <ul class="space-y-4">
+                        <li><a href="./api.html#table-operations" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>表操作</span>
+                        </a></li>
+                        <li><a href="./api.html#data-operations" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>数据操作</span>
+                        </a></li>
+                        <li><a href="./api.html#transactions" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>事务管理</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-5 text-text-primary-light dark:text-text-primary-dark" data-i18n="community">社区</h3>
+                    <ul class="space-y-4">
+                        <li><a href="https://github.com/QinIndexCode/expo-liteDataStore" target="_blank" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>GitHub</span>
+                        </a></li>
+                        <li><a href="https://www.npmjs.com/package/expo-lite-db-store" target="_blank" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>npm</span>
+                        </a></li>
+                        <li><a href="./changelog.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2" data-i18n="changelog">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>更新日志</span>
+                        </a></li>
+                        <li><a href="./license.html" class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary-color dark:hover:text-primary-color transition-colors flex items-center gap-2" data-i18n="license">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>许可证</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-border-light dark:border-border-dark text-center text-text-secondary-light dark:text-text-secondary-dark">
+                <p>© 2025 expo-liteDBStore. <a href="./license.html" class="hover:text-primary-color dark:hover:text-primary-color font-medium" data-i18n="license">MIT License</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
